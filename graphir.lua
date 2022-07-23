@@ -49,7 +49,7 @@ function GRAPHIR.INTERNAL.CALCULATE_GRAPH_POINT(highest,height,current)
     return height*current/highest
 end
 
-function GRAPHIR.OBJECT:push()
+function GRAPHIR.OBJECT:push(block_clear)
     if not self and not self.members then error("Failed to access the graph object, are you sure you are running the function with \":\" and not \".\"") end
     local resolution = self.spaced and self.canvas.width or self.canvas.width*2
     local visible_members = {}
@@ -60,7 +60,7 @@ function GRAPHIR.OBJECT:push()
             highest_point = math.max(highest_point,self.members[index])
         end
     end
-    self.canvas:clear(self.bg)
+    if not block_clear then self.canvas:clear(self.bg) end
     local last
     for point_number,v in pairs(visible_members) do
         local point_height = GRAPHIR.INTERNAL.CALCULATE_GRAPH_POINT(highest_point, self.canvas.height*3, v)
